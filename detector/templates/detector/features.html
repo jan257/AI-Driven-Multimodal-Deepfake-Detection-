@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features - Deepfake Detector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .carousel-wrapper {
+      scroll-snap-type: x mandatory;
+    }
+    .feature-slide {
+      scroll-snap-align: start;
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-black">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-70 backdrop-blur-md border-b border-gray-700 shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-xl font-bold text-cyan-400">NeuroNova</div>
+      <div class="space-x-6 text-sm text-gray-300 hidden md:flex">
+        <a href="/" class="hover:text-cyan-400 transition">Home</a>
+        <a href="/upload" class="hover:text-cyan-400 transition">Upload</a>
+        <a href="/features" class="hover:text-cyan-400 transition">Features</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <section class="pt-36 text-center px-6">
+    <h1 class="text-4xl md:text-5xl font-bold text-cyan-400 mb-4">Our Unique Features</h1>
+    <p class="text-gray-400 max-w-2xl mx-auto text-lg mb-8">Explore how our system ensures secure and accurate deepfake detection through cutting-edge features.</p>
+  </section>
+
+  <!-- Carousel with Side Arrows -->
+<div class="relative flex items-center justify-center px-4 md:px-12 mt-10">
+
+  <!-- Left Arrow -->
+  <button id="prevBtn" class="absolute left-2 md:left-6 z-10 text-cyan-400 hover:text-white text-4xl">&larr;</button>
+
+  <!-- Carousel Container -->
+  <div id="carousel" class="carousel-wrapper flex overflow-x-hidden no-scrollbar w-full scroll-smooth relative">
+
+    <div class="flex transition-transform duration-500 space-x-6 w-full" style="min-width: 100%;">
+
+      <!-- Slide 1 -->
+      <div class="feature-slide bg-gradient-to-br from-indigo-900 to-indigo-600 p-10 md:p-16 rounded-2xl shadow-2xl w-full flex-shrink-0">
+        <h2 class="text-3xl md:text-4xl font-bold text-cyan-200 mb-4">Multimodal Deepfake Detection via Parallel Model Pipelining</h2>
+        <p class="text-gray-200 leading-relaxed mb-2">
+          This system utilizes two specialized neural networks — a ResNet-based Frame Classifier and a MobileNet-based Gaze Estimator — to analyze visual textures and eye movement patterns independently. These modalities work in parallel, enabling enhanced accuracy even against sophisticated deepfakes.
+        </p>
+        <p class="text-blue-100 italic">
+          📌 <span class="font-semibold">Novelty:</span> Dual-modality fusion (visual + behavioral) enables deeper anomaly detection than unimodal systems.
+        </p>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="feature-slide bg-gradient-to-br from-blue-900 to-blue-700 p-10 md:p-16 rounded-2xl shadow-2xl w-full flex-shrink-0">
+        <h2 class="text-3xl md:text-4xl font-bold text-cyan-200 mb-4">Confidence-Guided Decision Routing with Adaptive Class Weighting</h2>
+        <p class="text-gray-200 leading-relaxed mb-2">
+          Rather than relying on fixed thresholds or binary voting, the system uses softmax-based confidence scores to intelligently weigh predictions from each model. It dynamically adjusts importance based on which modality offers stronger evidence.
+        </p>
+        <p class="text-blue-100 italic">
+          📌 <span class="font-semibold">Novelty:</span> Adaptive weighting per prediction enables real-time trust management between models — rarely seen in standard pipelines.
+        </p>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="feature-slide bg-gradient-to-br from-cyan-900 to-cyan-700 p-10 md:p-16 rounded-2xl shadow-2xl w-full flex-shrink-0">
+        <h2 class="text-3xl md:text-4xl font-bold text-cyan-200 mb-4">Temporal Frame Sampling with Batch-Level Aggregation</h2>
+        <p class="text-gray-200 leading-relaxed mb-2">
+          Key frames are extracted from videos using a frame-rate-aware strategy to optimize coverage. Predictions across frames are aggregated to ensure consistency and minimize the effect of noisy or deceptive single frames.
+        </p>
+        <p class="text-blue-100 italic">
+          📌 <span class="font-semibold">Novelty:</span> Combines temporal insight and batch-level logic to simulate human-like decision making across time.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Right Arrow -->
+  <button id="nextBtn" class="absolute right-2 md:right-6 z-10 text-cyan-400 hover:text-white text-4xl">&rarr;</button>
+</div>
+
+
+  <!-- Dots -->
+  <div class="flex items-center justify-center mt-6 space-x-4">
+    <div id="carouselDots" class="flex space-x-3">
+      <span class="dot w-3 h-3 rounded-full bg-cyan-400 cursor-pointer transition"></span>
+      <span class="dot w-3 h-3 rounded-full bg-gray-500 cursor-pointer transition"></span>
+      <span class="dot w-3 h-3 rounded-full bg-gray-500 cursor-pointer transition"></span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-gray-800 py-6 text-center text-sm text-gray-500 mt-20">
+    © 2025 Deepfake Detector | All Rights Reserved
+  </footer>
+
+  <!-- Carousel Script -->
+  <script>
+    const carousel = document.getElementById('carousel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dots = document.querySelectorAll('.dot');
+    const slides = document.querySelectorAll('.feature-slide');
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    function updateCarousel(index) {
+      const slideWidth = slides[0].offsetWidth;
+      carousel.scrollTo({
+        left: index * slideWidth,
+        behavior: 'smooth'
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('bg-cyan-400', i === index);
+        dot.classList.toggle('bg-gray-500', i !== index);
+      });
+      currentIndex = index;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      const newIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel(newIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const newIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel(newIndex);
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => updateCarousel(i));
+    });
+
+    // Autoplay (optional)
+    setInterval(() => {
+      const newIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel(newIndex);
+    }, 10000);
+  </script>
+
+</body>
+</html>

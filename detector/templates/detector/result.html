@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detection Result - Deepfake Detector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Orbitron', sans-serif; background: #0a0a0a; color: #fff; }
+    section { min-height: 100vh; padding: 5rem 1rem; }
+  </style>
+</head>
+<body class="bg-black">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-70 backdrop-blur-md border-b border-gray-700 shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-xl font-bold text-cyan-400">NeuroNova</div>
+      <div class="space-x-6 text-sm text-gray-300 hidden md:flex">
+        <a href="/" class="hover:text-cyan-400 transition">Home</a>
+        <a href="/upload" class="hover:text-cyan-400 transition">Upload</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN SECTION -->
+  <section class="flex flex-col items-center justify-center text-center pt-32">
+
+    <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white">Detection Result</h1>
+
+    <!-- Loading Animation -->
+    <div id="loadingAnimation" class="mt-10">
+      <div class="animate-pulse text-cyan-400 text-lg">Analyzing media...</div>
+      <div class="mt-4 h-2 w-64 bg-gray-700 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-cyan-500 to-purple-600 animate-pulse w-1/2"></div>
+      </div>
+    </div>
+
+    <!-- RESULT BLOCK -->
+    <div id="resultBlock" class="hidden flex flex-col items-center justify-center">
+
+      <!-- Uploaded Media -->
+      {% if media_url|lower|slice:"-4:" == ".mp4" %}
+        <video controls class="w-64 h-auto max-w-2xl mb-6 rounded-lg border border-gray-700 shadow-lg mt-10">
+          <source src="{{ media_url }}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      {% else %}
+        <img src="{{ media_url }}" alt="Uploaded Media" class="w-64 h-auto max-w-2xl mb-6 rounded-lg border border-gray-700 shadow-lg mt-10">
+      {% endif %}
+
+      <!-- Result Text -->
+      <p class="text-lg text-gray-300">
+        Prediction:
+        <span class="{% if result == 'FAKE' %}text-red-500{% else %}text-green-500{% endif %} font-bold">
+          {{ result }}
+        </span>
+      </p>
+
+      <p class="text-xl mt-2"><strong>Confidence:</strong> {{ confidence|floatformat:2 }}%</p>
+
+      <!-- Charts -->
+      <div class="flex justify-center mt-10 w-full">
+        <!-- Doughnut Chart -->
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-md">
+          <h3 class="text-xl text-cyan-400 mb-4 text-center">Overall Prediction Confidence</h3>
+          <canvas id="confidenceDoughnut"></canvas>
+        </div>
+      </div>
+
+        <!-- Line Chart -->
+        <!-- <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+          <h3 class="text-xl text-purple-400 mb-4">Per-Model Confidence</h3>
+          <canvas id="lineChart"></canvas>
+        </div> -->
+      </div>
+
+      <!-- Analyze Another -->
+      <a href="/upload" class="mt-10 bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg shadow-xl hover:scale-105 transition">
+        Analyze Another
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+    © 2025 Deepfake Detector | All Rights Reserved
+  </footer>
+
+  <!-- Chart Script -->
+  <script>
+    window.addEventListener("load", function () {
+      setTimeout(() => {
+        document.getElementById("loadingAnimation").classList.add("hidden");
+        document.getElementById("resultBlock").classList.remove("hidden");
+
+        const label = "{{ result }}";
+        const overallConfidence = parseFloat("{{ confidence|floatformat:2 }}");
+        const gazeConfidence = parseFloat("{{ gaze_confidence|floatformat:2 }}");
+        const frameConfidence = parseFloat("{{ frame_confidence|floatformat:2 }}");
+
+        // Doughnut Chart
+        const doughnutCtx = document.getElementById('confidenceDoughnut').getContext('2d');
+        new Chart(doughnutCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Fake', 'Real'],
+            datasets: [{
+              data: [
+                label === 'FAKE' ? overallConfidence : 100 - overallConfidence,
+                label === 'REAL' ? overallConfidence : 100 - overallConfidence
+              ],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.7)',
+                'rgba(54, 162, 235, 0.7)'
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)'
+              ],
+              borderWidth: 2
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: 'bottom' },
+              tooltip: {
+                callbacks: {
+                  label: context => `${context.label}: ${context.parsed}%`
+                }
+              }
+            }
+          }
+        });
+
+        // Line Chart
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        new Chart(lineCtx, {
+          type: 'line',
+          data: {
+            labels: ['Frame Model', 'Gaze Model'],
+            datasets: [{
+              label: 'Model Confidence (%)',
+              data: [frameConfidence, gazeConfidence],
+              backgroundColor: 'rgba(0, 255, 255, 0.1)',
+              borderColor: 'rgba(0, 255, 255, 1)',
+              borderWidth: 2,
+              tension: 0.4,
+              pointBackgroundColor: 'cyan',
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                suggestedMin: 0,
+                suggestedMax: 100,
+                ticks: { color: '#ccc' },
+                grid: { color: '#333' }
+              },
+              x: {
+                ticks: { color: '#ccc' },
+                grid: { color: '#333' }
+              }
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: context => `${context.dataset.label}: ${context.parsed.y.toFixed(2)}%`
+                }
+              }
+            }
+          }
+        });
+
+      }, 1500); // Simulated delay
+    });
+  </script>
+
+</body>
+</html>

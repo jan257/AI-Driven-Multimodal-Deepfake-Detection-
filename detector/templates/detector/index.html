@@ -1,0 +1,15 @@
+
+{% extends 'detector/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="h-screen flex flex-col justify-center items-center text-center bg-gradient-to-br from-gray-900 via-indigo-900 to-black text-white">
+    <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-32 h-32 mb-4 animate-bounce drop-shadow-lg">
+    <h1 class="text-5xl font-extrabold mb-4 tracking-wide">DEEPFAKE DETECTOR</h1>
+    <p class="text-lg mb-8 text-indigo-300">Your AI Companion Against Digital Deception.</p>
+    <a href="{% url 'upload' %}" class="bg-indigo-600 hover:bg-indigo-800 px-6 py-3 rounded-full text-white font-semibold shadow-xl transition duration-300">
+        🚀 Get Started
+    </a>
+</div>
+{% endblock %}

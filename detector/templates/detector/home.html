@@ -1,0 +1,10 @@
+{% extends 'detector/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="h-screen flex flex-col justify-center items-center text-center animate-fade-in">
+    <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-32 h-32 mb-4 animate-pulse">
+    <h1 class="text-4xl font-bold mb-2">DEEPFAKE DETECTOR</h1>
+    <p class="text-lg mb-6">Your AI Companion Against Digital Deception</p>
+    <a href="{% url 'upload' %}" class="bg-indigo-600 hover:bg-indigo-800 px-6 py-3 rounded-full text-white font-semibold transition">Get Started</a>
+</div>
+{% endblock %}

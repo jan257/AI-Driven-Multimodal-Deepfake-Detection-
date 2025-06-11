@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deepfake Detector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 5rem 1rem;
+    }
+
+    /* Canvas styles */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+    }
+
+    /* Overlay for contrast */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6); /* semi-dark overlay */
+      backdrop-filter: blur(4px);
+      z-index: 0; /* ⬅️ Lower than content */
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- BACKGROUND ANIMATION -->
+<canvas id="matrixCanvas" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+
+<!-- ✅ CONTENT WRAPPER START -->
+<div class="relative z-10">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-70 backdrop-blur-md border-b border-gray-700 shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-xl font-bold text-cyan-400">NeuroNova</div>
+      <div class="space-x-6 text-sm text-gray-300 hidden md:flex">
+        <a href="#features" class="hover:text-cyan-400 transition">Features</a>
+        <a href="#tech" class="hover:text-cyan-400 transition">Technology</a>
+        <a href="#demo" class="hover:text-cyan-400 transition">Try Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="flex flex-col items-center justify-center text-center pt-32 relative z-10">
+    <!-- Semi-transparent Overlay for Improved Contrast -->
+    <div class="absolute inset-0 bg-black opacity-50 z-0"></div>
+    
+  <!-- Content Container -->
+  <div class="relative z-10 max-w-5xl text-center">
+    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+      AI-Powered Multimodal Deepfake Detection
+    </h1>
+    
+    <p class="text-lg md:text-xl text-gray-300 mb-6 px-2">
+      Combining Vision Transformers, Temporal Neural Networks, Eye Movement Detection, and Spectral Analysis
+      for Precise and Reliable Deepfake Identification.
+    </p>
+
+    <h2 class="text-3xl md:text-4xl font-semibold text-cyan-400 mb-10">
+      Detect Truth. Fight Deception.
+    </h2>
+
+    <a href="/upload" class="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-purple-600 hover:to-cyan-500 transition-all duration-300 text-white px-10 py-4 rounded-full text-lg shadow-lg hover:scale-105">
+      Get Started
+    </a>
+  </div>
+</section>
+
+  
+  <!-- FEATURES SECTION -->
+<section id="features" class="bg-gray-900 py-20">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-3xl font-semibold text-cyan-400 mb-10">Why We're Different</h2>
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <!-- Card 1 -->
+      <a href="{% url 'features' %}" class="block transform hover:scale-105 transition-transform duration-300">
+        <div class="p-6 bg-white/5 rounded-xl feature-card cursor-pointer">
+          <h3 class="text-xl font-bold text-purple-300 mb-2">Multimodal Detection Pipeline</h3>
+          <p class="text-gray-300">Our system employs a dual-model architecture combining a ResNet-based Frame Classifier and a MobileNet-based Gaze Estimator.</p>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="{% url 'features' %}" class="block transform hover:scale-105 transition-transform duration-300">
+        <div class="p-6 bg-white/5 rounded-xl feature-card cursor-pointer">
+          <h3 class="text-xl font-bold text-green-300 mb-2"> Confidence-Driven Prediction Fusion</h3>
+          <p class="text-gray-300">Dynamically weighs model outputs using softmax confidence scores, enhancing reliability across uncertain predictions.</p>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="{% url 'features' %}" class="block transform hover:scale-105 transition-transform duration-300">
+        <div class="p-6 bg-white/5 rounded-xl feature-card cursor-pointer">
+          <h3 class="text-xl font-bold text-cyan-300 mb-2">Temporal Frame Sampling & Aggregation</h3>
+          <p class="text-gray-300">Extracts key frames from videos and aggregates predictions over time for accurate, stable classification.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- TECH SECTION -->
+  <section id="tech" class="bg-black">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl text-cyan-400 mb-6">Built With Next-Gen AI</h2>
+      <p class="text-gray-400 mb-8">Powered by cutting-edge multimodal machine learning, our system fuses audio spectrogram embeddings, facial motion tracking, and image forgery analysis.</p>
+      <img src="../static/images/architecture0.jpeg" alt="Model Architecture" class="mx-auto w-4/5 rounded-xl shadow-lg">
+    </div>
+  </section>
+
+  <!-- CTA DEMO SECTION -->
+  <section id="demo" class="bg-gradient-to-br from-black via-gray-900 to-black text-center">
+    <h2 class="text-4xl font-bold text-white mb-6">Experience The Future</h2>
+    <p class="text-gray-400 text-lg mb-10">Upload your own media and witness our real-time deepfake classification system in action.</p>
+    <a href="/upload" class="bg-cyan-500 hover:bg-cyan-600 text-white px-10 py-4 rounded-full font-semibold shadow-lg transition-all duration-300">Try It Now</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+    © 2025 Deepfake Detector | All Rights Reserved
+  </footer>
+
+</div>
+<!-- ✅ CONTENT WRAPPER END -->
+
+<!-- GSAP Scroll Animations -->
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".feature-card", {
+    scrollTrigger: {
+      trigger: "#features",
+      start: "top center"
+    },
+    opacity: 0,
+    y: 50,
+    duration: 1,
+    stagger: 0.3,
+    ease: "power2.out"
+  });
+
+  gsap.from("#tech img", {
+    scrollTrigger: {
+      trigger: "#tech",
+      start: "top center"
+    },
+    scale: 0.8,
+    opacity: 0,
+    duration: 1,
+    ease: "power2.out"
+  });
+</script>
+
+<!-- Matrix Effect Background Script -->
+<canvas id="matrixCanvas" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+<script>
+  const canvas = document.getElementById("matrixCanvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+
+  const block = "█"; // Use solid block
+  const fontSize = 14;
+  const columns = canvas.width / fontSize;
+  const drops = Array.from({ length: columns }).fill(1);
+
+  function drawMatrix() {
+    ctx.fillStyle = theme === 'dark' ? "rgba(0, 0, 0, 0.05)" : "rgba(255, 255, 255, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = theme === 'dark' ? "#00ff9f" : "#0f0";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = block;
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      drops[i] = (drops[i] * fontSize > canvas.height || Math.random() > 0.975) ? 0 : drops[i] + 1;
+    }
+  }
+
+  let theme = localStorage.getItem("theme") || "dark";
+  document.documentElement.classList.toggle("dark", theme === "dark");
+
+  setInterval(drawMatrix, 33);
+</script>
+
+
+</body>
+</html>
