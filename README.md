@@ -139,16 +139,28 @@ Then open [http://localhost:8000](http://localhost:8000)
 
 ## 📊 Demo
 
+### Home Page
+![Home Page](https://github.com/jan257/AI-Driven-Multimodal-Deepfake-Detection-/blob/main/webpage/01-homepage.png)
+![Features](webpage/02-features.png)
+![Architecture](webpage/03-architecture.png)
+![Try Demo](webpage/04-try_demo.png)
+
+### 📷 Novelty Features
+![Novelty Features-1](webpage/05-novelty_features(a).png)
+![Novelty Features-2](webpage/06-novelty_features(b).png)
+![Novelty Features-3](webpage/07-novelty_features(c).png)
+
 ### 📷 Upload Interface
-![Upload Page](https://via.placeholder.com/800x400.png?text=Upload+Media+Interface)
+![Upload Page](webpage/08-upload_page.png)
+![Analyzing](webpage/09-loading.png)
 
 ### ✅ Result with Confidence
-![Prediction Result](https://via.placeholder.com/800x400.png?text=Deepfake+Prediction+Result)
+![Prediction Result](webpage/10-results.png)
+![Prediction Result](webpage/11-results.png)
 
 ### 📈 Confidence Chart
-![Confidence Chart](https://via.placeholder.com/800x400.png?text=Confidence+Doughnut+Chart)
-
-> Replace these URLs with your own screenshots once you deploy!
+![Confidence Chart](webpage/10-with_confidence_chart.png)
+![Confidence Chart](webpage/11-with_charts.png)
 
 ---
 
