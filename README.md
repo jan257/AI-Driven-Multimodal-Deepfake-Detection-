@@ -139,13 +139,13 @@ Then open [http://localhost:8000](http://localhost:8000)
 
 ## 📊 Demo
 
-### Home Page
+### 🧠 Home Page
 ![Home Page](https://github.com/jan257/AI-Driven-Multimodal-Deepfake-Detection-/blob/main/webpage/01-homepage.png)
 ![Features](webpage/02-features.png)
 ![Architecture](webpage/03-architecture.png)
 ![Try Demo](webpage/04-try_demo.png)
 
-### 📷 Novelty Features
+### 🚀 Novelty Features
 ![Novelty Features-1](webpage/05-novelty_features(a).png)
 ![Novelty Features-2](webpage/06-novelty_features(b).png)
 ![Novelty Features-3](webpage/07-novelty_features(c).png)
